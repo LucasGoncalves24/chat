@@ -3,15 +3,14 @@ const login = document.querySelector(".login")
 const loginForm = login.querySelector(".login__form")
 const loginInput = login.querySelector(".login__input")
 
-const chatFileInput = chat.querySelector(".chat__file");
-const chatFileButton = chat.querySelector(".chat__file-button");
-
 
 // chat elements
 const chat = document.querySelector(".chat")
 const chatForm = chat.querySelector(".chat__form")
 const chatInput = chat.querySelector(".chat__input")
 const chatMessages = chat.querySelector(".chat__messages")
+const chatFileInput = chat.querySelector(".chat__file");
+const chatFileButton = chat.querySelector(".chat__file-button");
 
 const colors = [
     "cadetblue",
