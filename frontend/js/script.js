@@ -171,3 +171,30 @@ chatFileInput.addEventListener("change", () => {
 
 loginForm.addEventListener("submit", handleLogin)
 chatForm.addEventListener("submit", sendMessage)
+
+
+
+
+const imageModal = document.querySelector(".image-modal");
+const imageModalImg = imageModal.querySelector(".image-modal__img");
+const imageModalClose = imageModal.querySelector(".image-modal__close");
+
+// Abrir modal ao clicar em uma imagem
+chatMessages.addEventListener("click", (event) => {
+    if (event.target.tagName === "IMG") {
+        imageModalImg.src = event.target.src; // Define a imagem clicada no modal
+        imageModal.style.display = "flex"; // Exibe o modal
+    }
+});
+
+// Fechar modal ao clicar no "X"
+imageModalClose.addEventListener("click", () => {
+    imageModal.style.display = "none";
+});
+
+// Fechar modal ao clicar fora da imagem
+imageModal.addEventListener("click", (event) => {
+    if (event.target === imageModal) {
+        imageModal.style.display = "none";
+    }
+});
