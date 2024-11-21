@@ -3,6 +3,10 @@ const login = document.querySelector(".login")
 const loginForm = login.querySelector(".login__form")
 const loginInput = login.querySelector(".login__input")
 
+const chatFileInput = chat.querySelector(".chat__file");
+const chatFileButton = chat.querySelector(".chat__file-button");
+
+
 // chat elements
 const chat = document.querySelector(".chat")
 const chatForm = chat.querySelector(".chat__form")
@@ -48,6 +52,38 @@ const createMessageOtherElement = (content, sender, senderColor) => {
     return div
 }
 
+const createImageSelfElement = (imageURL) => {
+    const div = document.createElement("div");
+    const img = document.createElement("img");
+
+    div.classList.add("message--self");
+    img.src = imageURL;
+    img.alt = "Imagem enviada";
+
+    div.appendChild(img);
+    return div;
+};
+
+const createImageOtherElement = (imageURL, sender, senderColor) => {
+    const div = document.createElement("div");
+    const span = document.createElement("span");
+    const img = document.createElement("img");
+
+    div.classList.add("message--other");
+
+    span.classList.add("message--sender");
+    span.style.color = senderColor;
+    span.innerHTML = sender;
+
+    img.src = imageURL;
+    img.alt = "Imagem recebida";
+
+    div.appendChild(span);
+    div.appendChild(img);
+    return div;
+};
+
+
 const getRandomColor = () => {
     const randomIndex = Math.floor(Math.random() * colors.length)
     return colors[randomIndex]
@@ -61,17 +97,20 @@ const scrollScreen = () => {
 }
 
 const processMessage = ({ data }) => {
-    const { userId, userName, userColor, content } = JSON.parse(data)
+    const { userId, userName, userColor, content, image } = JSON.parse(data);
 
-    const message =
-        userId == user.id
+    const message = image
+        ? (userId == user.id
+            ? createImageSelfElement(image)
+            : createImageOtherElement(image, userName, userColor))
+        : (userId == user.id
             ? createMessageSelfElement(content)
-            : createMessageOtherElement(content, userName, userColor)
+            : createMessageOtherElement(content, userName, userColor));
 
-    chatMessages.appendChild(message)
+    chatMessages.appendChild(message);
+    scrollScreen();
+};
 
-    scrollScreen()
-}
 
 const handleLogin = (event) => {
     event.preventDefault()
@@ -88,19 +127,48 @@ const handleLogin = (event) => {
 }
 
 const sendMessage = (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    const message = {
-        userId: user.id,
-        userName: user.name,
-        userColor: user.color,
-        content: chatInput.value
+    if (chatInput.value.trim()) {
+        const message = {
+            userId: user.id,
+            userName: user.name,
+            userColor: user.color,
+            content: chatInput.value,
+            image: null
+        };
+
+        websocket.send(JSON.stringify(message));
+        chatInput.value = "";
     }
+};
 
-    websocket.send(JSON.stringify(message))
 
-    chatInput.value = ""
-}
+chatFileButton.addEventListener("click", () => {
+    chatFileInput.click();
+});
+
+chatFileInput.addEventListener("change", () => {
+    const file = chatFileInput.files[0];
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            const message = {
+                userId: user.id,
+                userName: user.name,
+                userColor: user.color,
+                image: reader.result, // Base64 da imagem
+                content: "" // Não há texto na mensagem
+            };
+
+            websocket.send(JSON.stringify(message));
+        };
+
+        reader.readAsDataURL(file);
+    }
+});
+
 
 loginForm.addEventListener("submit", handleLogin)
 chatForm.addEventListener("submit", sendMessage)
