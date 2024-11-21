@@ -158,8 +158,8 @@ body {
 
 .message--self img,
 .message--other img {
-    max-width: 200px;
-    max-height: 200px;
+    max-width: 500px;
+    max-height: 500px;
     border-radius: 8px;
     margin-top: 5px;
 }
