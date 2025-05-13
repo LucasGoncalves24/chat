@@ -3,6 +3,12 @@ const login = document.querySelector(".login")
 const loginForm = login.querySelector(".login__form")
 const loginInput = login.querySelector(".login__input")
 
+// variaveis para áudio 
+let mediaRecorder;
+let audioChunks = [];
+const audioButton = document.querySelector(".chat__audio-button");
+
+
 
 // chat elements
 const chat = document.querySelector(".chat")
@@ -190,6 +196,48 @@ chatFileInput.addEventListener("change", () => {
 
 loginForm.addEventListener("submit", handleLogin)
 chatForm.addEventListener("submit", sendMessage)
+
+
+
+audioButton.addEventListener("click", async () => {
+    if (!mediaRecorder || mediaRecorder.state === "inactive") {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+
+        mediaRecorder.ondataavailable = (e) => {
+            audioChunks.push(e.data);
+        };
+
+        mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                const base64Audio = reader.result;
+
+                const message = {
+                    userId: user.id,
+                    userName: user.name,
+                    userColor: user.color,
+                    audio: base64Audio
+                };
+
+                websocket.send(JSON.stringify(message));
+            };
+
+            reader.readAsDataURL(audioBlob);
+        };
+
+        mediaRecorder.start();
+
+        audioButton.innerHTML = '<span class="material-symbols-outlined">stop</span>';
+    } else {
+        mediaRecorder.stop();
+        audioButton.innerHTML = '<span class="material-symbols-outlined">mic</span>';
+    }
+});
 
 
 
