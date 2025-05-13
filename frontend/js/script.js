@@ -130,7 +130,7 @@ const processMessage = ({ data }) => {
     scrollScreen();
 };
 */
-/*
+
 const processMessage = ({ data }) => {
     const { userId, userName, userColor, content, image, audio } = JSON.parse(data);
 
@@ -168,8 +168,7 @@ const processMessage = ({ data }) => {
     chatMessages.appendChild(message);
     scrollScreen();
 };
-*/
-
+/*
 const processMessage = ({ data }) => {
     const { userId, userName, userColor, content, type } = JSON.parse(data);
 
@@ -200,7 +199,7 @@ const processMessage = ({ data }) => {
 };
 
 
-
+*/
 
 const handleLogin = (event) => {
     event.preventDefault()
