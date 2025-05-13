@@ -111,7 +111,7 @@ const showNotification = (title, body) => {
 }
 
 
-
+/*
 const processMessage = ({ data }) => {
     const { userId, userName, userColor, content, image } = JSON.parse(data);
 
@@ -129,6 +129,46 @@ const processMessage = ({ data }) => {
     chatMessages.appendChild(message);
     scrollScreen();
 };
+*/
+
+const processMessage = ({ data }) => {
+    const { userId, userName, userColor, content, image, audio } = JSON.parse(data);
+
+    let message;
+
+    if (audio) {
+        const audioElement = document.createElement("audio");
+        audioElement.src = audio;
+        audioElement.controls = true;
+
+        message =
+            userId === user.id
+                ? createMessageSelfElement(audioElement.outerHTML)
+                : createMessageOtherElement(audioElement.outerHTML, userName, userColor);
+
+    } else if (image) {
+        const imageElement = document.createElement("img");
+        imageElement.src = image;
+        imageElement.classList.add("chat-image");
+
+        message =
+            userId === user.id
+                ? createMessageSelfElement(imageElement.outerHTML)
+                : createMessageOtherElement(imageElement.outerHTML, userName, userColor);
+
+    } else {
+        message =
+            userId === user.id
+                ? createMessageSelfElement(content)
+                : createMessageOtherElement(content, userName, userColor);
+    }
+
+    if (userId !== user.id) showNotification(userName, content);
+
+    chatMessages.appendChild(message);
+    scrollScreen();
+};
+
 
 
 const handleLogin = (event) => {
