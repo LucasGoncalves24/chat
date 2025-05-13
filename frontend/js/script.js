@@ -130,7 +130,7 @@ const processMessage = ({ data }) => {
     scrollScreen();
 };
 */
-
+/*
 const processMessage = ({ data }) => {
     const { userId, userName, userColor, content, image, audio } = JSON.parse(data);
 
@@ -168,6 +168,37 @@ const processMessage = ({ data }) => {
     chatMessages.appendChild(message);
     scrollScreen();
 };
+*/
+
+const processMessage = ({ data }) => {
+    const { userId, userName, userColor, content, type } = JSON.parse(data);
+
+    let element;
+
+    if (userId === user.id) {
+        // Mensagem enviada por mim
+        if (type === "audio") {
+            element = createMessageSelfElement(`<audio controls src="${content}"></audio>`);
+        } else if (type === "image") {
+            element = createMessageSelfElement(`<img src="${content}" class="chat__image" />`);
+        } else {
+            element = createMessageSelfElement(content);
+        }
+    } else {
+        // Mensagem de outro usuário
+        if (type === "audio") {
+            element = createMessageOtherElement(`<audio controls src="${content}"></audio>`, userName, userColor);
+        } else if (type === "image") {
+            element = createMessageOtherElement(`<img src="${content}" class="chat__image" />`, userName, userColor);
+        } else {
+            element = createMessageOtherElement(content, userName, userColor);
+        }
+    }
+
+    chatMessages.appendChild(element);
+    scrollScreen();
+};
+
 
 
 
