@@ -104,6 +104,7 @@ body {
 }
 
 .chat__input {
+    width: 100px;
     border: none;
     padding: 15px;
     border-radius: 8px;
