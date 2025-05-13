@@ -117,6 +117,9 @@ const processMessage = ({ data }) => {
             ? createMessageSelfElement(content)
             : createMessageOtherElement(content, userName, userColor));
 
+    if (userId !== user.id) showNotification(userName, content);
+      }
+
     chatMessages.appendChild(message);
     scrollScreen();
 };
