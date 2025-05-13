@@ -219,8 +219,8 @@ body {
     border-radius: 8px;
     margin-top: 4px;
 }
-
-/* Estilização básica da mensagem para conter bem o conteúdo */
+/*
+/* Estilização básica da mensagem para conter bem o conteúdo 
 .message--self,
 .message--other {
     word-wrap: break-word;
@@ -232,7 +232,7 @@ body {
     background-color: #f1f1f1;
 }
 
-/* Se quiser personalizar mais o visual */
+/* Se quiser personalizar mais o visual 
 .message--self {
     background-color: #d1f0ff;
     align-self: flex-end;
@@ -242,4 +242,4 @@ body {
     background-color: #eee;
     align-self: flex-start;
 }
-
+*/
