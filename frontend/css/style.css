@@ -205,3 +205,41 @@ body {
     font-size: 24px;
 }
 
+
+
+
+
+/**/
+/* Garante que o player de áudio fique dentro da mensagem */
+.message--self audio,
+.message--other audio {
+    max-width: 100%;
+    height: 40px;
+    outline: none;
+    border-radius: 8px;
+    margin-top: 4px;
+}
+
+/* Estilização básica da mensagem para conter bem o conteúdo */
+.message--self,
+.message--other {
+    word-wrap: break-word;
+    max-width: 80%;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    display: inline-block;
+    background-color: #f1f1f1;
+}
+
+/* Se quiser personalizar mais o visual */
+.message--self {
+    background-color: #d1f0ff;
+    align-self: flex-end;
+}
+
+.message--other {
+    background-color: #eee;
+    align-self: flex-start;
+}
+
