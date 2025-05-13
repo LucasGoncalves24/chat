@@ -95,6 +95,17 @@ const scrollScreen = () => {
     })
 }
 
+const showNotification = (title, body) => {
+    if (document.hidden && Notification.permission === "granted") {
+        new Notification(title, {
+            body: body,
+            icon: "./assets/chat-icon.png" // opcional, adicione um ícone do seu projeto
+        });
+    }
+}
+
+
+
 const processMessage = ({ data }) => {
     const { userId, userName, userColor, content, image } = JSON.parse(data);
 
