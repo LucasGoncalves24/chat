@@ -123,6 +123,11 @@ const handleLogin = (event) => {
 
     websocket = new WebSocket("wss://chat-backend-d04q.onrender.com")
     websocket.onmessage = processMessage
+
+    // Solicita permissão para notificação
+if ("Notification" in window && Notification.permission !== "granted") {
+    Notification.requestPermission();
+}
 }
 
 const sendMessage = (event) => {
