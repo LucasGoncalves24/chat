@@ -105,10 +105,34 @@ const showNotification = (title, body) => {
     if (document.hidden && Notification.permission === "granted") {
         new Notification(title, {
             body: body,
-            icon: "./images/chat-icon.png" // opcional, adicione um ícone do seu projeto
+            icon: "./images/chat-icon.png", // opcional, adicione um ícone do seu projeto
+            vibrate: [100, 50, 100] // vibrações no celular (se suportado)
         });
     }
 }
+
+/*
+const showNotification = (title, body) => {
+    if (document.hidden && Notification.permission === "granted") {
+        const notification = new Notification(title, {
+            body: body,
+            icon: "./assets/chat-icon.png", // opcional
+            vibrate: [100, 50, 100] // vibrações no celular (se suportado)
+        });
+
+        // Toca som
+        notificationSound.play().catch(e => {
+            // evita erro se o navegador bloquear autoplay
+            console.warn("Som de notificação bloqueado:", e);
+        });
+
+        // Fecha automaticamente após 5 segundos
+        setTimeout(() => {
+            notification.close();
+        }, 5000);
+    }
+};
+*/
 
 
 /*
