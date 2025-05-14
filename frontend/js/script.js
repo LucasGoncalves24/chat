@@ -139,7 +139,7 @@ const showNotification = (title, body) => {
 
 
 
-
+/*
 const processMessage = ({ data }) => {
     const { userId, userName, userColor, content, image } = JSON.parse(data);
 
@@ -158,7 +158,7 @@ const processMessage = ({ data }) => {
     scrollScreen();
 };
 
-/*
+*/
 const processMessage = ({ data }) => {
     const { userId, userName, userColor, content, image, audio } = JSON.parse(data);
 
@@ -196,7 +196,7 @@ const processMessage = ({ data }) => {
     chatMessages.appendChild(message);
     scrollScreen();
 };
-*/
+
 const handleLogin = (event) => {
     event.preventDefault()
 
