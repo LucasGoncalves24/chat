@@ -100,7 +100,7 @@ const scrollScreen = () => {
         behavior: "smooth"
     })
 }
-
+/*
 const showNotification = (title, body) => {
     if (document.hidden && Notification.permission === "granted") {
         new Notification(title, {
@@ -111,7 +111,7 @@ const showNotification = (title, body) => {
     }
 }
 
-/*
+*/
 const showNotification = (title, body) => {
     if (document.hidden && Notification.permission === "granted") {
         const notification = new Notification(title, {
@@ -120,11 +120,15 @@ const showNotification = (title, body) => {
             vibrate: [100, 50, 100] // vibrações no celular (se suportado)
         });
 
+        /*
         // Toca som
         notificationSound.play().catch(e => {
             // evita erro se o navegador bloquear autoplay
             console.warn("Som de notificação bloqueado:", e);
         });
+        */
+
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
 
         // Fecha automaticamente após 5 segundos
         setTimeout(() => {
@@ -132,7 +136,7 @@ const showNotification = (title, body) => {
         }, 5000);
     }
 };
-*/
+
 
 
 /*
